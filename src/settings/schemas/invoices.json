@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Fattura",
+  "type": "object",
+  "required": ["supplier", "dated", "description", "amount"],
+  "properties": {
+    "id": {
+      "title": "ID",
+      "readOnly": true,
+      "type": "integer"
+    },
+    "supplier": {
+      "title": "Fornitore",
+      "readOnly": false,
+      "writeOnly": true,
+      "type": "string",
+      "format": "supplier"
+    },
+    "payments": {
+      "title": "Pagamento",
+      "readOnly": true,
+      "writeOnly": true,
+      "type": "string",
+      "format": "uri"
+    },
+    "supplierName": {
+      "title": "Fornitore",
+      "readOnly": true,
+      "type": "string"
+    },
+    "dated": {
+      "title": "Data",
+      "readOnly": false,
+      "type": "string",
+      "format": "date"
+    },
+    "description": {
+      "title": "Descrizione",
+      "readOnly": false,
+      "type": "string",
+      "minLength": 3
+    },
+    "amount": {
+      "title": "Ammontare",
+      "readOnly": false,
+      "type": "number",
+      "format": "currency",
+      "minimum": 0
+    },
+    "totalPaidAmount": {
+      "title": "Pagato",
+      "readOnly": true,
+      "type": "number",
+      "format": "currency"
+    },
+    "leftoverAmount": {
+      "title": "Residuo",
+      "readOnly": true,
+      "type": "number",
+      "format": "currency"
+    },
+    "created": {
+      "title": "Data creazione",
+      "readOnly": true,
+      "writeOnly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "modified": {
+      "title": "Ultima modifica",
+      "readOnly": true,
+      "writeOnly": true,
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "definitions": {}
+}

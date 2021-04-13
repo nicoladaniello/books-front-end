@@ -1,0 +1,7 @@
+{
+  "supplierName": { "label": "Fornitore", "type": "text" },
+  "totalDueAmount": { "label": "Fatture", "type": "text" },
+  "totalPaidAmount": { "label": "Pagamenti", "type": "text" },
+  "outstandingAmount": { "label": "Residuo", "type": "text" }
+}
+

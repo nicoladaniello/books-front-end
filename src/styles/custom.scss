@@ -1,0 +1,102 @@
+// Colors
+$white: #fff;
+$gray-100: #f7f8fa;
+$gray-200: #edeff2;
+$gray-300: #dbdfe6;
+$gray-400: #c9cfd9;
+$gray-500: #a6afc0;
+$gray-600: #828ea6;
+$gray-700: #707e99;
+$gray-800: #445573;
+$gray-900: #35425a;
+$black: #000;
+
+$primary: #40C9A2;
+$secondary: #091540;
+$light: $gray-100;
+$dark: $gray-800;
+
+// General
+$spacer: 1.4rem;
+$body-bg: $light;
+$body-color: $gray-800;
+
+// Options
+$enable-shadows: true;
+
+// Typography
+$font-family-sans-serif: "Open Sans", -apple-system, BlinkMacSystemFont,
+  "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans",
+  sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+  "Noto Color Emoji";
+
+$font-size-base: 1rem;
+$font-size-sm: $font-size-base * 0.75;
+$font-size-lg: $font-size-base * 1.25;
+
+$small-font-size: 85%;
+
+$line-height-base: 1.5;
+
+// Components
+//
+// Define common padding and border radius sizes and more.
+
+$border-width: 2px;
+$border-radius: 0rem;
+$border-color: $gray-200;
+
+$box-shadow-sm: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+$box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
+$box-shadow-lg: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+  rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+
+// Card
+$card-spacer-y: 1.5rem;
+$card-spacer-x: 1.75rem;
+$card-border-width: $border-width;
+$card-border-color: $border-color;
+$card-cap-bg: $white;
+
+// Input
+$input-bg: $white;
+$input-border-color: $border-color;
+$input-border-width: $border-width;
+$input-border-radius: 0px;
+$input-box-shadow: none;
+
+$custom-select-border-color: $border-color;
+$custom-select-border-radius: 0px;
+$custom-select-box-shadow: none;
+
+// Input group
+$input-group-addon-bg: transparent;
+
+// Modal
+$modal-content-border-width: 0px;
+
+// Navs
+$nav-link-padding-y: 0.75rem;
+
+// Navbar
+$nav-link-height: $font-size-base * $line-height-base + $nav-link-padding-y * 2 !default;
+$navbar-nav-link-padding-x: 1rem;
+
+// Table
+$table-cell-padding: 1rem;
+
+@import "bootstrap/scss/bootstrap";
+
+.navbar-light .navbar-brand {
+  font-weight: bold;
+  color: $primary;
+}
+
+.no-caret::after {
+  display: none;
+}
+
+.card-header {
+  border-bottom: none;
+  padding-bottom: 0px;
+}

@@ -1,0 +1,6 @@
+{
+  "like": { "label": "contiene", "value": ":" },
+  "equals": { "label": "uguale a", "value": "=" },
+  "greater": { "label": "maggiore di", "value": ">" },
+  "lesser": { "label": "minore di", "value": "<" }
+}

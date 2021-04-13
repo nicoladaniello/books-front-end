@@ -1,0 +1,30 @@
+{
+  "id": { "editable": true, "label": "ID", "type": "hidden" },
+  "invoice": { "editable": true, "hidden": true, "label": "Fattura", "type": "invoice" },
+  "invoiceDescription": { "label": "Fattura", "type": "invoice" },
+  "dated": {
+    "editable": true,
+    "label": "Data",
+    "type": "date",
+    "rules": {
+      "required": true
+    }
+  },
+  "description": {
+    "editable": true,
+    "label": "Descrizione",
+    "type": "text"
+  },
+  "amount": {
+    "editable": true,
+    "label": "Ammontare",
+    "type": "currency",
+    "rules": {
+      "required": true,
+      "min": 0
+    }
+  },
+  "leftoverToDate": {
+    "label": "Rimanente"
+  }
+}

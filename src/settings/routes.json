@@ -1,0 +1,16 @@
+{
+  "home": "/periods",
+  "periods": "/periods",
+  "login": "/login",
+  "logout": "/logout",
+  "register": "/register",
+  "suppliers": "/suppliers",
+  "periodSummary": "/periods/summary",
+  "PeriodInvoices": "/periods/summary/invoices",
+  "PeriodPayments": "/periods/summary/payments",
+  "PeriodSupplierInvoices": "/periods/summary/supplier/invoices",
+  "PeriodSupplierPayments": "/periods/summary/supplier/payments",
+  "invoices": "/invoices",
+  "payments": "/payments",
+  "profile": "/profile"
+}

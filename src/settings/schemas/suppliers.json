@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Fornitori",
+  "type": "object",
+  "required": ["name"],
+  "properties": {
+    "id": {
+      "title": "ID",
+      "readOnly": true,
+      "type": "integer"
+    },
+    "name": {
+      "title": "Nome",
+      "readOnly": false,
+      "type": "string",
+      "minLength": 3
+    },
+    "address": {
+      "title": "Indirizzo",
+      "readOnly": false,
+      "type": "string"
+    },
+    "vatNumber": {
+      "title": "P.Iva",
+      "readOnly": false,
+      "type": "string"
+    },
+    "taxCode": {
+      "title": "Codice fiscale",
+      "readOnly": false,
+      "type": "string"
+    },
+    "email": {
+      "title": "Email",
+      "readOnly": false,
+      "type": "string"
+    },
+    "phone": {
+      "title": "Telefono",
+      "readOnly": false,
+      "type": "string"
+    },
+    "created": {
+      "title": "Data creazione",
+      "readOnly": true,
+      "writeOnly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "modified": {
+      "title": "Ultima modifica",
+      "readOnly": true,
+      "writeOnly": true,
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

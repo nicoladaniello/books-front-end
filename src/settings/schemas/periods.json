@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Periodo",
+  "type": "object",
+  "required": ["name", "startDate", "endDate"],
+  "properties": {
+    "id": {
+      "title": "ID",
+      "readOnly": true,
+      "writeOnly": true,
+      "type": "integer"
+    },
+    "name": {
+      "title": "Nome",
+      "readOnly": false,
+      "type": "string",
+      "minLength": 3
+    },
+    "startDate": {
+      "title": "Inizio data",
+      "readOnly": false,
+      "type": "string",
+      "format": "date"
+    },
+    "endDate": {
+      "title": "Fine data",
+      "readOnly": false,
+      "type": "string",
+      "format": "date"
+    },
+    "summary": {
+      "title": "Summary",
+      "readOnly": true,
+      "type": "object",
+      "$ref": "#/definitions/periodSummary"
+    },
+    "created": {
+      "title": "Data creazione",
+      "readOnly": true,
+      "writeOnly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "modified": {
+      "title": "Ultima modifica",
+      "readOnly": true,
+      "writeOnly": true,
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "definitions": {
+    "periodSummary": {
+      "type": "object",
+      "properties": {
+        "totalDueAmount": {
+          "title": "Fatture",
+          "readOnly": true,
+          "type": "number",
+          "format": "currency"
+        },
+        "totalPaidAmount": {
+          "title": "Pagamenti",
+          "readOnly": true,
+          "type": "number",
+          "format": "currency"
+        },
+        "outstandingAmount": {
+          "title": "Residuo",
+          "readOnly": true,
+          "type": "number",
+          "format": "currency"
+        }
+      }
+    }
+  }
+}

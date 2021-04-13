@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Pagamento",
+  "type": "object",
+  "required": ["invoice", "dated", "description", "amount"],
+  "properties": {
+    "id": {
+      "title": "ID",
+      "readOnly": true,
+      "type": "integer"
+    },
+    "invoice": {
+      "title": "Fattura",
+      "readOnly": false,
+      "writeOnly": true,
+      "type": "string",
+      "format": "invoice"
+    },
+    "dated": {
+      "title": "Data",
+      "readOnly": false,
+      "type": "string",
+      "format": "date"
+    },
+    "description": {
+      "title": "Descrizione",
+      "readOnly": false,
+      "type": "string",
+      "minLength": 3
+    },
+    "amount": {
+      "title": "Ammontare",
+      "readOnly": false,
+      "type": "number",
+      "format": "currency",
+      "minimum": 0
+    },
+    "leftoverToDate": {
+      "title": "Residuo",
+      "readOnly": true,
+      "type": "number",
+      "format": "currency"
+    },
+    "created": {
+      "title": "Data creazione",
+      "readOnly": true,
+      "writeOnly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "modified": {
+      "title": "Ultima modifica",
+      "readOnly": true,
+      "writeOnly": true,
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
