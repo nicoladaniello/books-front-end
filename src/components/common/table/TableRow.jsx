@@ -1,19 +1,15 @@
 import React from "react";
-import TableRowDropdown from "./TableRowDropdown";
+import TableRowActions from "./TableRowActions";
 
-const TableRow = ({ data, filters, schema, actions, ...props }) => {
+const TableRow = ({ data, schema, actions, ...props }) => {
   const cols = getData(data, schema);
-
-  for (let i = 0; i < filters.length; i++) {
-    if (!filters[i].apply(cols)) return null;
-  }
 
   return (
     <tr {...props}>
       {Object.keys(cols).map((row) => (
         <td key={row}>{cols[row]}</td>
       ))}
-      {actions && <TableRowDropdown data={data} actions={actions} />}
+      <TableRowActions data={data} actions={actions} />
     </tr>
   );
 };

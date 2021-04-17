@@ -3,7 +3,17 @@ import AsyncSelect from "react-select/async";
 import classnames from "classnames";
 
 const Autocomplete = forwardRef(
-  ({ onChange, loadOptions, getOptionLabel, className, ...props }, ref) => {
+  (
+    {
+      onChange,
+      loadOptions,
+      getOptionLabel,
+      isClearable = true,
+      className,
+      ...props
+    },
+    ref
+  ) => {
     return (
       <AsyncSelect
         {...props}
@@ -14,6 +24,7 @@ const Autocomplete = forwardRef(
         onChange={onChange}
         loadOptions={loadOptions}
         getOptionLabel={getOptionLabel}
+        isClearable
       />
     );
   }

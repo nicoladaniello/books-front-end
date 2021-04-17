@@ -1,7 +1,4 @@
 import React, { useEffect } from "react";
-import SelectInvoiceButton from "../components/buttons/SelectInvoiceButton";
-import SelectPeriodButton from "../components/buttons/SelectPeriodButton";
-import SelectSupplierButton from "../components/buttons/SelectSupplierButton";
 import Icon from "../components/common/Icon";
 import Pagination from "../components/common/Pagination";
 import Table from "../components/common/table/Table";
@@ -9,9 +6,9 @@ import View from "../components/common/View";
 import useModal from "../hooks/useModal";
 import useResource from "../hooks/useResource";
 
-const resource = process.env.PAYMENTS_ENDPOINT;
+const resource = process.env.PERIODS_ENDPOINT;
 
-const Payments = () => {
+const Periods = () => {
   const { fetchAll, Provider } = useResource(resource);
   const modal = useModal();
 
@@ -36,8 +33,8 @@ const Payments = () => {
    */
   const handleDelete = async (entity) => {
     modal.deleteEntity({
-      title: "Elimina pagamento",
-      message: `Vuoi eliminare il pagamento "${entity.description}"?`,
+      title: "Elimina periodo",
+      message: `Vuoi eliminare il periodo "${entity.name}"?`,
       resource,
       entity,
     });
@@ -58,11 +55,6 @@ const Payments = () => {
     <View privateRoute>
       <Provider>
         <div className="h-100 px-3" style={{ overflowY: "auto" }}>
-          <div className="my-3">
-            <SelectPeriodButton />
-            <SelectSupplierButton />
-            <SelectInvoiceButton />
-          </div>
           <Table actions={tableRowActions} />
           <Pagination />
         </div>
@@ -71,4 +63,4 @@ const Payments = () => {
   );
 };
 
-export default Payments;
+export default Periods;

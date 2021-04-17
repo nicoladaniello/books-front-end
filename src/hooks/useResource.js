@@ -16,16 +16,6 @@ const useResource = (name) => {
   const dispatch = useDispatch();
 
   /**
-   * Delete entity by id.
-   *
-   * @param {string} id - The ID of the entity.
-   */
-  const destroy = useCallback(
-    (entity) => dispatch(actions.destroy({ entity })),
-    [dispatch, actions]
-  );
-
-  /**
    * Fetch all entities.
    *
    * @param {object} params - Url parameters. E.g. { page: 0, size: 10, sort: "name,asc", ... }
@@ -38,24 +28,16 @@ const useResource = (name) => {
   );
 
   /**
-   * Fetch entity by id.
+   * Fetch next page.
    *
-   * @param {string} id - The ID of the entity.
+   * @param {object} params - Url parameters. E.g. { page: 0, size: 10, sort: "name,asc", ... }
    */
-  const fetchById = useCallback((id) => dispatch(actions.fetchById({ id })), [
-    dispatch,
-    actions,
-  ]);
-
-  /**
-   * Insert a new entity.
-   *
-   * @param {object} entity - The data of the entity.
-   */
-  const insert = useCallback((entity) => dispatch(actions.insert({ entity })), [
-    dispatch,
-    actions,
-  ]);
+  const fetchNextPage = useCallback(
+    (params) => {
+      return dispatch(actions.fetchNextPage({ params }));
+    },
+    [dispatch, actions]
+  );
 
   /**
    * Search entities by a query method.
@@ -69,36 +51,49 @@ const useResource = (name) => {
   );
 
   /**
-   * Update entity by id.
+   * upsert an entity.
    *
-   * @param {object} entity - The data to update.
+   * @param {object} entity - The data of the entity. If an ID is present, the entity will be patched.
    */
-  const update = useCallback((entity) => dispatch(actions.update({ entity })), [
+  const upsert = useCallback((entity) => dispatch(actions.upsert({ entity })), [
     dispatch,
     actions,
   ]);
 
   /**
-   * Clear the request details keeping the data.
+   * Delete entity by id.
+   *
+   * @param {string} id - The ID of the entity.
    */
-  const clearRequest = useCallback(() => dispatch(actions.clearRequest()), [
-    dispatch,
-    actions,
-  ]);
+  const destroy = useCallback(
+    (entity) => dispatch(actions.destroy({ entity })),
+    [dispatch, actions]
+  );
+
+  /**
+   * Set the search params.
+   * If set the initial page load will use searchByMethod instead of fetchAll.
+   *
+   * @param {object} params - Url parameters. E.g. { page: 0, size: 10, sort: "name,asc", ... }
+   */
+  const setSearchArgs = useCallback(
+    (args) => dispatch(actions.setSearchArgs(args)),
+    [dispatch, actions]
+  );
 
   /**
    * Interface
    */
   const api = {
+    name,
     state,
     schema,
-    searchByMethod,
     fetchAll,
-    fetchById,
-    insert,
-    update,
+    fetchNextPage,
+    searchByMethod,
+    upsert,
     destroy,
-    clearRequest,
+    setSearchArgs,
   };
 
   /**

@@ -1,44 +1,56 @@
-import React from "react";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faFolder,
-  faCalendarCheck,
-  faCreditCard,
-  faShoppingCart,
-  faPeopleArrows,
-  faCogs,
-  faSignOutAlt,
-  faCaretRight,
-  faCaretDown,
-  faCaretUp,
-  faEllipsisH,
-  faTimes,
-  faChevronRight,
   faArrowAltCircleLeft,
   faArrowAltCircleRight,
+  faCalendarAlt,
+  faCaretDown,
+  faCaretRight,
+  faCaretUp,
+  faChevronRight,
+  faCogs,
+  faCreditCard,
+  faEdit,
+  faEllipsisH,
+  faFileInvoice,
+  faPeopleArrows,
+  faPlus,
+  faPrint,
+  faSignOutAlt,
+  faTimes,
+  faTrashAlt,
+  faTruck,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
 
 library.add([
-  faFolder,
-  faCalendarCheck,
-  faCreditCard,
-  faShoppingCart,
-  faPeopleArrows,
-  faCogs,
-  faSignOutAlt,
-  faCaretRight,
-  faCaretDown,
-  faCaretUp,
-  faEllipsisH,
-  faTimes,
-  faChevronRight,
   faArrowAltCircleLeft,
   faArrowAltCircleRight,
+  faCalendarAlt,
+  faCaretDown,
+  faCaretRight,
+  faCaretUp,
+  faChevronRight,
+  faCogs,
+  faCreditCard,
+  faEdit,
+  faEllipsisH,
+  faPeopleArrows,
+  faPlus,
+  faPrint,
+  faFileInvoice,
+  faSignOutAlt,
+  faTimes,
+  faTrashAlt,
+  faTruck,
 ]);
 
 const Icon = ({ icon, size, ...props }) => {
-  return <FontAwesomeIcon {...props} size={size} icon={icon} />;
+  return (
+    <span {...props}>
+      <FontAwesomeIcon size={size} icon={icon} />
+    </span>
+  );
 };
 
 export default Icon;

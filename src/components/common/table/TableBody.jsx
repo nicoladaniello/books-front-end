@@ -3,9 +3,16 @@ import React from "react";
 import TableRow from "./TableRow";
 import TableRowEmpty from "./TableRowEmpty";
 
-const TableBody = ({ ids, entities, filters, schema, actions }) => {
+const TableBody = ({ ids, entities, page, schema, actions, ...props }) => {
   return (
-    <tbody>
+    <tbody {...props}>
+      <tr className="hover-none">
+        <td colSpan="100">
+          <h6 className="text-muted small mb-0">
+            {schema.title} ({page?.totalElements || 0})
+          </h6>
+        </td>
+      </tr>
       {ids && ids.length ? (
         ids.map((id) => (
           <TableRow
@@ -13,7 +20,6 @@ const TableBody = ({ ids, entities, filters, schema, actions }) => {
             key={id}
             schema={schema}
             data={entities[id]}
-            filters={filters}
             actions={actions}
           />
         ))

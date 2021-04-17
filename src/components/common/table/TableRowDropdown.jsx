@@ -17,7 +17,10 @@ const TableRowDropdown = ({ data, actions }) => {
         </Dropdown.Toggle>
 
         {actions && (
-          <Dropdown.Menu>
+          <Dropdown.Menu
+            className="d-flex text-center p-1"
+            style={{ minWidth: "auto" }}
+          >
             {actions.map(
               (
                 { label, onClick, props: { className, ...otherProps } = {} },
@@ -25,7 +28,7 @@ const TableRowDropdown = ({ data, actions }) => {
               ) => (
                 <Dropdown.Item
                   {...otherProps}
-                  className={classnames(className, "small")}
+                  className={classnames(className, "px-2")}
                   key={idx}
                   onClick={() => onClick(data)}
                 >

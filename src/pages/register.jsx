@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 import useAuth from "../hooks/useAuth";
 import useResource from "../hooks/useResource";
 import { authStatus } from '../reducers/authSlice';
-import { httpRequestStatus } from "../resources/createResource";
 import routes from "../settings/routes";
+import httpRequestStatus from '../utils/httpRequestStatus';
 
 const Register = () => {
   const state = useSelector((state) => state.companies);

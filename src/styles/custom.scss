@@ -11,14 +11,15 @@ $gray-800: #445573;
 $gray-900: #35425a;
 $black: #000;
 
-$primary: #40C9A2;
+$primary: #40c9a2;
+$primary-light: lighten(#40c9a2, 45%);
 $secondary: #091540;
 $light: $gray-100;
 $dark: $gray-800;
 
 // General
 $spacer: 1.4rem;
-$body-bg: $light;
+$body-bg: $white;
 $body-color: $gray-800;
 
 // Options
@@ -38,15 +39,19 @@ $small-font-size: 85%;
 
 $line-height-base: 1.5;
 
+// Links
+$link-color: $gray-500;
+
 // Components
-//
+
 // Define common padding and border radius sizes and more.
 
-$border-width: 2px;
-$border-radius: 0rem;
-$border-color: $gray-200;
+$border-width: 1px;
+$border-radius: 0px;
+$border-color: $gray-300;
 
-$box-shadow-sm: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+$box-shadow-sm: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+  rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 $box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
 $box-shadow-lg: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
   rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
@@ -73,10 +78,17 @@ $custom-select-box-shadow: none;
 $input-group-addon-bg: transparent;
 
 // Modal
-$modal-content-border-width: 0px;
+$modal-content-border-color: $border-color;
+$modal-content-border-width: 1px;
+$modal-backdrop-bg: transparent;
+// $modal-backdrop-opacity: .2;
+
+$modal-header-border-width: 1px;
 
 // Navs
 $nav-link-padding-y: 0.75rem;
+$nav-pills-link-active-color: $primary;
+$nav-pills-link-active-bg: $primary-light;
 
 // Navbar
 $nav-link-height: $font-size-base * $line-height-base + $nav-link-padding-y * 2 !default;
@@ -87,6 +99,32 @@ $table-cell-padding: 1rem;
 
 @import "bootstrap/scss/bootstrap";
 
+// Buttons
+.btn-primary-light {
+  color: $primary;
+  background-color: $primary-light;
+  border-color: $primary-light;
+}
+
+// Modal
+.modal-dialog {
+  width: 100%;
+}
+.modal-content {
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px,
+    rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+}
+.modal-body.modal-body-scrollable {
+  max-height: 60vh;
+  overflow-y: scroll;
+}
+
+// Navs
+.nav-pills .nav-link {
+  color: inherit;
+}
+
+// Navbar
 .navbar-light .navbar-brand {
   font-weight: bold;
   color: $primary;
@@ -96,7 +134,33 @@ $table-cell-padding: 1rem;
   display: none;
 }
 
-.card-header {
-  border-bottom: none;
-  padding-bottom: 0px;
+// Table
+.table {
+  empty-cells: show;
+}
+
+.table tr.hover-none:hover {
+  background-color: inherit;
+}
+.table th > .btn {
+  font-weight: inherit;
+  color: inherit;
+  font-weight: 500;
+}
+.table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #fff;
+  border: 0px;
+  box-shadow: 0 1px 1px -1px $border-color;
+}
+.table tr > td {
+  vertical-align: middle;
+}
+.table tr > td > .table-actions {
+  visibility: hidden;
+}
+.table tr:hover > td > .table-actions {
+  visibility: visible;
 }

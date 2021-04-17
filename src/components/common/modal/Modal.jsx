@@ -1,14 +1,20 @@
 import React from "react";
 import { Modal as BSModal } from "react-bootstrap";
 import useModal from "../../../hooks/useModal";
-import ConfirmModal from "./ConfirmModal";
+import DeleteEntityModal from "./deleteEntityModal";
 import ErrorModal from "./ErrorModal";
-import FormModal from "./FormModal";
+import SearchByInvoiceModal from './SearchByInvoiceModal';
+import SearchByPeriodModal from "./SearchByPeriodModal";
+import SearchBySupplierModal from "./SearchBySupplierModal";
+import UpsertEntityModal from "./upsertEntityModal";
 
 export const modalTypes = {
-  confirm: ConfirmModal,
+  deleteEntity: DeleteEntityModal,
+  upsertEntity: UpsertEntityModal,
   error: ErrorModal,
-  form: FormModal,
+  searchByPeriod: SearchByPeriodModal,
+  searchBySupplier: SearchBySupplierModal,
+  searchByInvoice: SearchByInvoiceModal
 };
 
 const Modal = () => {
@@ -17,9 +23,15 @@ const Modal = () => {
   const ModalContent = modalTypes[type];
 
   return (
-    <BSModal show={isOpen} onHide={close}>
+    <BSModal
+      className="d-flex justify-content-center align-items-center"
+      show={isOpen}
+      onHide={close}
+      backdrop="static"
+      keyboard={false}
+    >
       {!!ModalContent && (
-        <ModalContent {...props} onClose={close} />
+        <ModalContent {...props} className="w-100" onClose={close} />
       )}
     </BSModal>
   );

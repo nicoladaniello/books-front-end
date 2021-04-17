@@ -43,15 +43,23 @@ async function fetchById({ resource, id }) {
 }
 
 /**
- * Insert a new entity.
+ * upsert an entity.
  *
  * @param {object} args - The function arguments.
  * @param {string} args.resource - The resource name.
  * @param {object} args.entity - The data of the entity.
  */
-async function insert({ resource, entity }) {
-  const { data } = await httpService.post(resource, entity);
-  return data;
+async function upsert({ resource, entity }) {
+  let response;
+
+  if (entity.id) {
+    const id = entity.id;
+    const data = { ...entity };
+    delete data.id;
+    response = await httpService.patch(`${resource}/${id}`, data);
+  } else response = await httpService.post(resource, entity);
+
+  return response.data;
 }
 
 /**
@@ -92,7 +100,7 @@ const apiService = {
   destroy,
   fetchAll,
   fetchById,
-  insert,
+  upsert,
   searchByMethod,
   update,
 };

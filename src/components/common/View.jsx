@@ -2,11 +2,12 @@ import classnames from "classnames";
 import { navigate } from "gatsby";
 import { PropTypes } from "prop-types";
 import React from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import useAuth from "../../hooks/useAuth";
-import { authStatus } from '../../reducers/authSlice';
+import { authStatus } from "../../reducers/authSlice";
 import routes from "../../settings/routes";
-import NavMenu from "./menu/NavMenu";
+import NavMenu from '../NavMenu';
+import Navbar from "./Navbar";
 
 export const ViewTitle = ({ className, children, ...props }) => (
   <h1 {...props} className={classnames(className, "h4 mb-4")}>
@@ -25,20 +26,20 @@ const View = ({ privateRoute, children }) => {
   if (privateRoute && auth.status === authStatus.unknown) return "Loading...";
 
   return (
-    <Container fluid>
-      <Row noGutters className="w-100 h-100">
+    <div
+      className="d-flex flex-column"
+      style={{ height: "100vh", maxHeight: "100vh", overflow: "hidden" }}
+    >
+      <Navbar />
+      <Row noGutters className="h-100">
         <Col xs="2">
           <NavMenu />
         </Col>
-        <Col xs="10">
-          <Container fluid className="pt-2">
-            <Card className="border-0 shadow">
-              <Card.Body className="p-3">{children}</Card.Body>
-            </Card>
-          </Container>
+        <Col xs="10" className="h-100">
+          {children}
         </Col>
       </Row>
-    </Container>
+    </div>
   );
 };
 

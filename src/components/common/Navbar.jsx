@@ -5,7 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import { authStatus } from '../../reducers/authSlice';
 import routes from "../../settings/routes";
 
-const Navbar = ({ brand, ...props }) => {
+const Navbar = (props) => {
   const auth = useAuth();
 
   return (
@@ -16,7 +16,7 @@ const Navbar = ({ brand, ...props }) => {
       style={{ zIndex: 1 }}
       {...props}
     >
-      <BSNavbar.Brand>{brand}</BSNavbar.Brand>
+      <BSNavbar.Brand>Books</BSNavbar.Brand>
       <BSNavbar.Toggle aria-controls="basic-navbar-nav" />
       <BSNavbar.Collapse id="basic-navbar-nav">
         {auth.status === authStatus.authenticated && (
