@@ -1,18 +1,26 @@
+import React from "react";
 import { navigate } from "gatsby";
-import useAuth from "../hooks/useAuth";
-import { authStatus } from '../reducers/authSlice';
+import useAuth from "../components/auth/useAuth";
 import routes from "../settings/routes";
+import Spinner from "../components/common/Spinner";
 
 const IndexPage = () => {
-  const { status } = useAuth();
+  const { isAuthenticated, isAnonymous } = useAuth();
 
-  if (status === authStatus.authenticated) {
+  if (isAuthenticated) {
     navigate(routes.home);
-  } else if (status === authStatus.anonymous) {
+  } else if (isAnonymous) {
     navigate(routes.login);
-  } else return "Loading...";
+  }
 
-  return null;
+  return (
+    <div className="d-flex" style={{ height: "100vh" }}>
+      <div className="m-auto text-center">
+        <Spinner className="mb-2" />
+        <p>Caricando...</p>
+      </div>
+    </div>
+  );
 };
 
 export default IndexPage;

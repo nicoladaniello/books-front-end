@@ -40,7 +40,7 @@ $small-font-size: 85%;
 $line-height-base: 1.5;
 
 // Links
-$link-color: $gray-500;
+$link-color: $dark;
 
 // Components
 
@@ -120,7 +120,7 @@ $table-cell-padding: 1rem;
 }
 
 // Navs
-.nav-pills .nav-link {
+.nav-pills {
   color: inherit;
 }
 
@@ -150,7 +150,7 @@ $table-cell-padding: 1rem;
 .table thead th {
   position: sticky;
   top: 0;
-  z-index: 1;
+  // z-index: 1;
   background-color: #fff;
   border: 0px;
   box-shadow: 0 1px 1px -1px $border-color;
@@ -163,4 +163,16 @@ $table-cell-padding: 1rem;
 }
 .table tr:hover > td > .table-actions {
   visibility: visible;
+}
+
+// Exclude section from printing
+@media print {
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
+
+  .overflow-auto {
+    overflow: visible !important;
+  }
 }

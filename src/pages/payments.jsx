@@ -1,53 +1,44 @@
 import React, { useEffect } from "react";
-import SelectInvoiceButton from "../components/buttons/SelectInvoiceButton";
-import SelectPeriodButton from "../components/buttons/SelectPeriodButton";
-import SelectSupplierButton from "../components/buttons/SelectSupplierButton";
+import { useDispatch, useSelector } from "react-redux";
 import Icon from "../components/common/Icon";
 import Pagination from "../components/common/Pagination";
+import SearchByButton from "../components/common/SearchByButton";
 import Table from "../components/common/table/Table";
 import View from "../components/common/View";
-import useModal from "../hooks/useModal";
-import useResource from "../hooks/useResource";
-
-const resource = process.env.PAYMENTS_ENDPOINT;
+import { loadEntities, loadMore } from "../components/payments/actions";
+import DeletePaymentModal from "../components/payments/DeletePaymentModal";
+import SearchByInvoiceModal from "../components/payments/SearchByInvoiceModal";
+import SearchByPeriodModal from "../components/payments/SearchByPeriodModal";
+import SearchBySupplierModal from "../components/payments/SearchBySupplierModal";
+import { openModal } from "../components/payments/slice";
+import UpsertPaymentModal from "../components/payments/UpsertPaymentModal";
+import schema from "../settings/schemas/payments";
 
 const Payments = () => {
-  const { fetchAll, Provider } = useResource(resource);
-  const modal = useModal();
+  const state = useSelector((state) => state.payments);
+  const dispatch = useDispatch();
 
   /**
    * Initial fetch
    */
-  useEffect(() => void fetchAll(), [fetchAll]);
+  useEffect(() => void dispatch(loadEntities()), [dispatch]);
 
-  /**
-   * Opens a form dialog and updates an existing entity.
-   *
-   * @param {object} defaultValues - The entity to update.
-   */
-  const handleUpdate = async (defaultValues) => {
-    modal.upsertEntity({ resource, defaultValues });
-  };
+  const handleUpdate = (payment) =>
+    dispatch(
+      openModal({ modal: UpsertPaymentModal.modal, props: { payment } })
+    );
 
-  /**
-   * Opens a dialog to confirm action and deletes the entity.
-   *
-   * @param {object} entity - The entity to delete.
-   */
-  const handleDelete = async (entity) => {
-    modal.deleteEntity({
-      title: "Elimina pagamento",
-      message: `Vuoi eliminare il pagamento "${entity.description}"?`,
-      resource,
-      entity,
-    });
-  };
+  const handleRemove = (payment) =>
+    dispatch(
+      openModal({ modal: DeletePaymentModal.modal, props: { payment } })
+    );
 
-  const tableRowActions = [
+  // Table row actions
+  const actions = [
     { label: <Icon icon="edit" />, onClick: handleUpdate },
     {
       label: <Icon icon="trash-alt" />,
-      onClick: handleDelete,
+      onClick: handleRemove,
     },
   ];
 
@@ -56,17 +47,51 @@ const Payments = () => {
    */
   return (
     <View privateRoute>
-      <Provider>
-        <div className="h-100 px-3" style={{ overflowY: "auto" }}>
-          <div className="my-3">
-            <SelectPeriodButton />
-            <SelectSupplierButton />
-            <SelectInvoiceButton />
-          </div>
-          <Table actions={tableRowActions} />
-          <Pagination />
+      <div className="h-100 px-3" style={{ overflowY: "auto" }}>
+        <div className="my-3">
+          <SearchByButton
+            input={state.search?.period}
+            onClick={() =>
+              dispatch(openModal({ modal: SearchByPeriodModal.modal }))
+            }
+          >
+            {state.search?.period?.name || "Seleiona periodo"}
+          </SearchByButton>
+          <SearchByButton
+            input={state.search?.supplier}
+            onClick={() =>
+              dispatch(openModal({ modal: SearchBySupplierModal.modal }))
+            }
+          >
+            {state.search?.supplier?.name || "Seleziona fornitore"}
+          </SearchByButton>
+          <SearchByButton
+            input={state.search?.invoice}
+            onClick={() =>
+              dispatch(openModal({ modal: SearchByInvoiceModal.modal }))
+            }
+          >
+            {state.search?.invoice?.description || "Seleziona fattura"}
+          </SearchByButton>
         </div>
-      </Provider>
+        <Table
+          schema={schema}
+          ids={state.ids}
+          entities={state.entities}
+          page={state.page}
+          isLoading={state.isLoading}
+          actions={actions}
+        />
+        <Pagination
+          page={state.page}
+          isLoading={state.isLoading}
+          onLoadMore={() => dispatch(loadMore())}
+        />
+        <DeletePaymentModal />
+        <SearchByPeriodModal />
+        <SearchBySupplierModal />
+        <SearchByInvoiceModal />
+      </div>
     </View>
   );
 };

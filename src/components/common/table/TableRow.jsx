@@ -1,4 +1,5 @@
 import React from "react";
+import NumberFormat from "react-number-format";
 import TableRowActions from "./TableRowActions";
 
 const TableRow = ({ data, schema, actions, ...props }) => {
@@ -7,7 +8,19 @@ const TableRow = ({ data, schema, actions, ...props }) => {
   return (
     <tr {...props}>
       {Object.keys(cols).map((row) => (
-        <td key={row}>{cols[row]}</td>
+        <td key={row}>
+          {cols[row]?.format === "currency" ? (
+            <NumberFormat
+              displayType="text"
+              thousandSeparator={process.env.LOCAL_CURRENCY_THOUSAND_SEPARATOR}
+              decimalSeparator={process.env.LOCAL_CURRENCY_DECIMAL_SEPARATOR}
+              prefix={process.env.LOCAL_CURRENCY_SYMBOL}
+              value={cols[row].value}
+            />
+          ) : (
+            cols[row]?.value || null
+          )}
+        </td>
       ))}
       <TableRowActions data={data} actions={actions} />
     </tr>
@@ -21,8 +34,10 @@ function getData(data, schema) {
       // WriteOnly fields won't appear in the table
       if (schema.properties[key].writeOnly) return null;
 
-      if (schema.properties[key].type !== "object")
-        return { [key]: data ? data[key] : null };
+      if (schema.properties[key].type !== "object") {
+        const format = schema.properties[key].format;
+        return { [key]: data ? { value: data[key], format } : null };
+      }
 
       // Handle nested object
       if (schema.properties[key].properties) {

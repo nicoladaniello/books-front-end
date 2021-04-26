@@ -1,50 +1,40 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Icon from "../components/common/Icon";
 import Pagination from "../components/common/Pagination";
 import Table from "../components/common/table/Table";
 import View from "../components/common/View";
-import useModal from "../hooks/useModal";
-import useResource from "../hooks/useResource";
-
-const resource = process.env.SUPPLIERS_ENDPOINT;
+import { loadEntities, loadMore } from "../components/suppliers/actions";
+import DeleteSupplierModal from "../components/suppliers/DeleteSupplierModal";
+import { openModal } from "../components/suppliers/slice";
+import UpsertSupplierModal from "../components/suppliers/UpsertSupplierModal";
+import schema from "../settings/schemas/suppliers";
 
 const Suppliers = () => {
-  const { fetchAll, Provider } = useResource(resource);
-  const modal = useModal();
+  const state = useSelector((state) => state.suppliers);
+  const dispatch = useDispatch();
 
   /**
    * Initial fetch
    */
-  useEffect(() => void fetchAll(), [fetchAll]);
+  useEffect(() => void dispatch(loadEntities()), [dispatch]);
 
-  /**
-   * Opens a form dialog and updates an existing entity.
-   *
-   * @param {object} defaultValues - The entity to update.
-   */
-  const handleUpdate = async (defaultValues) => {
-    modal.upsertEntity({ resource, defaultValues });
-  };
+  const handleUpdate = (supplier) =>
+    dispatch(
+      openModal({ modal: UpsertSupplierModal.modal, props: { supplier } })
+    );
 
-  /**
-   * Opens a dialog to confirm action and deletes the entity.
-   *
-   * @param {object} entity - The entity to delete.
-   */
-  const handleDelete = async (entity) => {
-    modal.deleteEntity({
-      title: "Elimina fornitore",
-      message: `Vuoi eliminare il fornitore "${entity.name}"?`,
-      resource,
-      entity,
-    });
-  };
+  const handleRemove = (supplier) =>
+    dispatch(
+      openModal({ modal: DeleteSupplierModal.modal, props: { supplier } })
+    );
 
-  const tableRowActions = [
+  // Table row actions
+  const actions = [
     { label: <Icon icon="edit" />, onClick: handleUpdate },
     {
       label: <Icon icon="trash-alt" />,
-      onClick: handleDelete,
+      onClick: handleRemove,
     },
   ];
 
@@ -53,12 +43,22 @@ const Suppliers = () => {
    */
   return (
     <View privateRoute>
-      <Provider>
-        <div className="h-100 px-3" style={{ overflowY: "auto" }}>
-          <Table actions={tableRowActions} />
-          <Pagination />
-        </div>
-      </Provider>
+      <div className="h-100 px-3" style={{ overflowY: "auto" }}>
+        <Table
+          schema={schema}
+          ids={state.ids}
+          entities={state.entities}
+          page={state.page}
+          isLoading={state.isLoading}
+          actions={actions}
+        />
+        <Pagination
+          page={state.page}
+          isLoading={state.isLoading}
+          onLoadMore={() => dispatch(loadMore())}
+        />
+        <DeleteSupplierModal />
+      </div>
     </View>
   );
 };

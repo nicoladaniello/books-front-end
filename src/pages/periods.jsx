@@ -1,50 +1,36 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Icon from "../components/common/Icon";
 import Pagination from "../components/common/Pagination";
 import Table from "../components/common/table/Table";
 import View from "../components/common/View";
-import useModal from "../hooks/useModal";
-import useResource from "../hooks/useResource";
-
-const resource = process.env.PERIODS_ENDPOINT;
+import { loadEntities, loadMore } from "../components/periods/actions";
+import DeletePeriodModal from "../components/periods/DeletePeriodModal";
+import { openModal } from "../components/periods/slice";
+import UpsertPeriodModal from "../components/periods/UpsertPeriodModal";
+import schema from "../settings/schemas/periods";
 
 const Periods = () => {
-  const { fetchAll, Provider } = useResource(resource);
-  const modal = useModal();
+  const state = useSelector((state) => state.periods);
+  const dispatch = useDispatch();
 
   /**
    * Initial fetch
    */
-  useEffect(() => void fetchAll(), [fetchAll]);
+  useEffect(() => void dispatch(loadEntities()), [dispatch]);
 
-  /**
-   * Opens a form dialog and updates an existing entity.
-   *
-   * @param {object} defaultValues - The entity to update.
-   */
-  const handleUpdate = async (defaultValues) => {
-    modal.upsertEntity({ resource, defaultValues });
-  };
+  const handleUpdate = (period) =>
+    dispatch(openModal({ modal: UpsertPeriodModal.modal, props: { period } }));
 
-  /**
-   * Opens a dialog to confirm action and deletes the entity.
-   *
-   * @param {object} entity - The entity to delete.
-   */
-  const handleDelete = async (entity) => {
-    modal.deleteEntity({
-      title: "Elimina periodo",
-      message: `Vuoi eliminare il periodo "${entity.name}"?`,
-      resource,
-      entity,
-    });
-  };
+  const handleRemove = (period) =>
+    dispatch(openModal({ modal: DeletePeriodModal.modal, props: { period } }));
 
-  const tableRowActions = [
+  // Table row actions
+  const actions = [
     { label: <Icon icon="edit" />, onClick: handleUpdate },
     {
       label: <Icon icon="trash-alt" />,
-      onClick: handleDelete,
+      onClick: handleRemove,
     },
   ];
 
@@ -53,12 +39,22 @@ const Periods = () => {
    */
   return (
     <View privateRoute>
-      <Provider>
-        <div className="h-100 px-3" style={{ overflowY: "auto" }}>
-          <Table actions={tableRowActions} />
-          <Pagination />
-        </div>
-      </Provider>
+      <div className="h-100 px-3" style={{ overflowY: "auto" }}>
+        <Table
+          schema={schema}
+          ids={state.ids}
+          entities={state.entities}
+          page={state.page}
+          isLoading={state.isLoading}
+          actions={actions}
+        />
+        <Pagination
+          page={state.page}
+          isLoading={state.isLoading}
+          onLoadMore={() => dispatch(loadMore())}
+        />
+        <DeletePeriodModal />
+      </div>
     </View>
   );
 };

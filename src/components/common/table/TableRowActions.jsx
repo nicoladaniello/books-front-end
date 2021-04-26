@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 
 const TableRowActions = ({ data, actions }) => {
   return !actions ? null : (
-    <td>
+    <td className="no-print">
       <div className="table-actions" style={{ whiteSpace: "nowrap" }}>
         {actions.map(({ label, onClick }, idx) => (
           <Button

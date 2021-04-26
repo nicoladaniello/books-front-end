@@ -2,20 +2,22 @@ import { Link, navigate } from "gatsby";
 import React, { useEffect } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import useAuth from "../hooks/useAuth";
-import useResource from "../hooks/useResource";
-import { authStatus } from '../reducers/authSlice';
+import { useDispatch, useSelector } from "react-redux";
+import useAuth from "../components/auth/useAuth";
+import { upsert } from "../components/companies/actions";
 import routes from "../settings/routes";
-import httpRequestStatus from '../utils/httpRequestStatus';
+import { unwrapResult } from "@reduxjs/toolkit";
 
 const Register = () => {
   const state = useSelector((state) => state.companies);
-  const companies = useResource("companies");
+  const dispatch = useDispatch();
   const auth = useAuth();
-  const { register, errors, handleSubmit } = useForm();
-
-  const isLoading = state.status === httpRequestStatus.pending;
+  const {
+    formState: { errors },
+    register,
+    handleSubmit,
+    setError,
+  } = useForm();
 
   useEffect(() => {
     console.log(state.error);
@@ -26,35 +28,33 @@ const Register = () => {
    *
    * @param {*} e - The form submission event.
    */
-  // const createCompany = async (company) => {
-  //   isBusy(true);
+  const createCompany = async (company) => {
+    try {
+      const result = await dispatch(upsert(company));
+      unwrapResult(result);
 
-  //   try {
-  //     await companies.insert(company);
-  //     await auth.login(company);
-  //     navigate(routes.home);
-  //   } catch (ex) {
-  //     const errors = ex.response?.data?.errors;
+      const login = await auth.login(company);
+      unwrapResult(login);
 
-  //     if (errors) {
-  //       errors.forEach(({ property, message }) =>
-  //         setError(property, { message })
-  //       );
-  //     } else {
-  //       console.error(ex, ex.response);
-  //       await errorDialog.open({
-  //         message: ex.response?.data?.message || ex.message,
-  //       });
-  //     }
-  //   }
+      navigate(routes.home);
+    } catch (error) {
+      console.log(error);
+      const errors = error.response?.data?.errors;
 
-  //   isBusy(false);
-  // };
+      if (errors) {
+        errors.forEach(({ property, message }) =>
+          setError(property, { message })
+        );
+      } else {
+        console.error(error, error.response);
+      }
+    }
+  };
 
   /**
    * If the user is already logged in redirects to the homepage.
    */
-  if (auth.status === authStatus.authenticated) {
+  if (auth.isAuthenticated) {
     navigate(routes.home);
     return null;
   }
@@ -76,16 +76,15 @@ const Register = () => {
             <Card.Body>
               <Form
                 className="text-left"
-                onSubmit={handleSubmit(companies.insert)}
+                onSubmit={handleSubmit(createCompany)}
               >
                 <Form.Group>
                   <Form.Label>Ragione Sociale</Form.Label>
                   <Form.Control
-                    ref={register({ required: true, minLength: 3 })}
+                    {...register("name", { required: true, minLength: 3 })}
                     type="text"
-                    name="name"
                     placeholder="Azienda SRC"
-                    disabled={isLoading}
+                    disabled={state.isLoading}
                     className={errors.name && "is-invalid"}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -95,11 +94,10 @@ const Register = () => {
                 <Form.Group>
                   <Form.Label>Password</Form.Label>
                   <Form.Control
-                    ref={register({ required: true, minLength: 3 })}
+                    {...register("password")}
                     type="password"
-                    name="password"
                     placeholder="password"
-                    disabled={isLoading}
+                    disabled={state.isLoading}
                     className={errors.password && "is-invalid"}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -111,7 +109,7 @@ const Register = () => {
                   type="submit"
                   className="my-4"
                   variant="primary"
-                  disabled={isLoading}
+                  disabled={state.isLoading}
                 >
                   Registra
                 </Button>

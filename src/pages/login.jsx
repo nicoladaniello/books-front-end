@@ -1,22 +1,21 @@
 import { navigate } from "gatsby";
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
+import useAuth from "../components/auth/useAuth";
 import LoginForm from "../components/login/LoginForm";
 import UserList from "../components/login/UserList";
-import useAuth from "../hooks/useAuth";
-import { authStatus } from "../reducers/authSlice";
 import routes from "../settings/routes";
 
 /**
  * Login View
  */
 const Login = () => {
-  const { status } = useAuth();
+  const { isAuthenticated } = useAuth();
   const [user, setUser] = useState();
 
   useEffect(() => {
-    if (status === authStatus.authenticated) navigate(routes.home);
-  }, [status]);
+    if (isAuthenticated) navigate(routes.home);
+  }, [isAuthenticated]);
 
   /**
    * If the user is already logged in redirects to the homepage.

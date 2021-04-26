@@ -1,25 +1,25 @@
 import { Link } from "gatsby";
 import React, { useEffect } from "react";
 import { Alert, Button, ListGroup } from "react-bootstrap";
-import useResource from "../../hooks/useResource";
+import { useDispatch, useSelector } from "react-redux";
 import routes from "../../settings/routes";
-import httpRequestStatus from '../../utils/httpRequestStatus';
 import Icon from "../common/Icon";
 import Spinner from "../common/Spinner";
+import { loadEntities } from "../companies/actions";
 
 /**
  *
  */
 const UserList = ({ onSelect }) => {
-  const { state, fetchAll } = useResource("companies");
-  const { status, entities, ids, error } = state;
+  const state = useSelector((state) => state.companies);
+  const dispatch = useDispatch();
+
+  const { ids, entities, error, isLoading } = state;
 
   /**
-   * Initial fetch.
+   * Initial load.
    */
-  useEffect(() => {
-    if (status === httpRequestStatus.idle) fetchAll();
-  }, [status, fetchAll]);
+  useEffect(() => dispatch(loadEntities()), [dispatch]);
 
   /**
    * UI
@@ -27,9 +27,8 @@ const UserList = ({ onSelect }) => {
   return (
     <>
       {!!error && <Alert variant="danger">{error.message}</Alert>}
-      {status === httpRequestStatus.pending ? (
-        <Spinner className="my-5" />
-      ) : (
+      {isLoading && <Spinner className="my-5" />}
+      {!!ids && (
         <ListGroup className="text-left mb-3">
           {ids.map((id) => (
             <ListGroup.Item

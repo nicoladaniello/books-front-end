@@ -1,8 +1,8 @@
 import React from "react";
 import { Alert, Button, Card, Form, InputGroup } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import useAuth from "../../hooks/useAuth";
 import httpRequestStatus from "../../utils/httpRequestStatus";
+import useAuth from '../auth/useAuth';
 
 /**
  *

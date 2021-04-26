@@ -6,26 +6,40 @@ import httpService from "./httpService";
  * @author Nicola D'Aniello
  */
 
+function objectToUrlParams(obj) {
+  let str = "";
+  for (const key in obj) {
+    if (obj[key] === null || obj[key] === undefined) continue;
+
+    if (str !== "") str += "&";
+    str += key + "=" + encodeURIComponent(obj[key]);
+  }
+  return str;
+}
+
 /**
- * Delete an entity.
+ * Search entities by a query method.
  *
- * @param {object} args - The function arguments.
- * @param {string} args.resource - The resource name.
- * @param {string} args.entity - The entity to delete.
+ * @param {string} resource - The resource name.
+ * @param {string} method - The query method name.
+ * @param {object} params - Url parameters. E.g. { page: 0, size: 10, sort: "name,asc", ... }
  */
-async function destroy({ resource, entity }) {
-  await httpService.delete(`${resource}/${entity.id}`);
+async function searchByMethod(resource, method, params) {
+  const urlParams = objectToUrlParams(params);
+  const { data } = await httpService.get(
+    `${resource}/search/${method}?${urlParams}`
+  );
+  return data;
 }
 
 /**
  * Fetch all entities.
  *
- * @param {object} args - The function arguments.
- * @param {string} args.resource - The resource name.
- * @param {object} args.params - The url parameters. E.g. { page: 0, size: 10, sort: "name,asc", ... }
+ * @param {string} resource - The resource name.
+ * @param {object} params - The url parameters. E.g. { page: 0, size: 10, sort: "name,asc", ... }
  */
-async function fetchAll({ resource, params }) {
-  const urlParams = new URLSearchParams(params).toString();
+async function fetchAll(resource, params) {
+  const urlParams = objectToUrlParams(params);
   const { data } = await httpService.get(`${resource}?${urlParams}`);
   return data;
 }
@@ -33,11 +47,10 @@ async function fetchAll({ resource, params }) {
 /**
  * Fetch an entity by its id.
  *
- * @param {object} args - The function arguments.
- * @param {string} args.resource - The resource name.
- * @param {string} args.id - The ID of the entity.
+ * @param {string} resource - The resource name.
+ * @param {string} id - The ID of the entity.
  */
-async function fetchById({ resource, id }) {
+async function fetchById(resource, id) {
   const { data } = await httpService.get(`${resource}/${id}`);
   return data;
 }
@@ -45,11 +58,10 @@ async function fetchById({ resource, id }) {
 /**
  * upsert an entity.
  *
- * @param {object} args - The function arguments.
- * @param {string} args.resource - The resource name.
- * @param {object} args.entity - The data of the entity.
+ * @param {string} resource - The resource name.
+ * @param {object} entity - The data of the entity.
  */
-async function upsert({ resource, entity }) {
+async function upsert(resource, entity) {
   let response;
 
   if (entity.id) {
@@ -63,46 +75,33 @@ async function upsert({ resource, entity }) {
 }
 
 /**
- * Search entities by a query method.
+ * Remove an entity.
  *
- * @param {object} args - The function arguments.
- * @param {string} args.resource - The resource name.
- * @param {string} args.method - The query method name.
- * @param {object} args.params - Url parameters. E.g. { page: 0, size: 10, sort: "name,asc", ... }
+ * @param {string} resource - The resource name.
+ * @param {string} entity - The entity to delete.
  */
-async function searchByMethod({ resource, method, params }) {
-  const urlParams = new URLSearchParams(params).toString();
-  const { data } = await httpService.get(
-    `${resource}/search/${method}?${urlParams}`
-  );
-  return data;
+async function remove(resource, entity) {
+  await httpService.delete(`${resource}/${entity.id}`);
 }
 
 /**
- * Patch an entity.
- *
- * @param {object} args - The function arguments.
- * @param {string} args.resource - The resource name.
- * @param {object} args.entity - The entity data.
+ * Shutdown the server.
  */
-async function update({ resource, entity }) {
-  const id = entity.id;
-  const data = { ...entity };
-  delete data.id;
-  const response = await httpService.patch(`${resource}/${id}`, data);
-  return response.data;
+async function shutdown() {
+  const shutdownEndpoint = `${process.env.ENDPOINT_URL}/${process.env.SHUTDOWN_API}`;
+  await httpService.post(shutdownEndpoint);
 }
 
 /**
  * Interface
  */
 const apiService = {
-  destroy,
+  searchByMethod,
   fetchAll,
   fetchById,
   upsert,
-  searchByMethod,
-  update,
+  remove,
+  shutdown,
 };
 
 export default apiService;

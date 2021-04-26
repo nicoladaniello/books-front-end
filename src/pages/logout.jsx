@@ -1,16 +1,15 @@
 import { navigate } from "gatsby";
 import React, { useEffect } from "react";
-import useAuth from "../hooks/useAuth";
-import { authStatus } from '../reducers/authSlice';
+import useAuth from "../components/auth/useAuth";
 import routes from "../settings/routes";
 
 const Logout = () => {
-  const { status, logout } = useAuth();
+  const { isAuthenticated, isAnonymous, logout } = useAuth();
 
   useEffect(() => {
-    if (status === authStatus.authenticated) logout();
-    else if (status === authStatus.anonymous) navigate(routes.login);
-  }, [status, logout]);
+    if (isAuthenticated) logout();
+    else if (isAnonymous) navigate(routes.login);
+  }, [isAuthenticated, isAnonymous, logout]);
 
   return <div>Logging you out...</div>;
 };

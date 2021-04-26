@@ -1,7 +1,5 @@
-import { PropTypes } from "prop-types";
-import React, { useContext } from "react";
+import React from "react";
 import { Table as BSTable } from "react-bootstrap";
-import { resourceContext } from "../../../hooks/useResource";
 import TableBody from "./TableBody";
 import TableHead from "./TableHead";
 
@@ -12,11 +10,15 @@ import TableHead from "./TableHead";
  *
  * Nested objects in the schema are flattened to root level.
  */
-const Table = ({ filters, actions, sortedBy }) => {
-  const {
-    schema,
-    state: { ids, entities, page },
-  } = useContext(resourceContext);
+const Table = ({
+  schema,
+  ids,
+  entities,
+  page,
+  isLoading,
+  actions,
+  sortedBy,
+}) => {
   /**
    * Requests a page reload with the new sorting order.
    *
@@ -34,15 +36,11 @@ const Table = ({ filters, actions, sortedBy }) => {
         ids={ids}
         entities={entities}
         page={page}
-        filters={filters}
+        isLoading={isLoading}
         actions={actions}
       />
     </BSTable>
   );
-};
-
-Table.propTypes = {
-  actions: PropTypes.array,
 };
 
 export default Table;

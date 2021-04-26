@@ -1,22 +1,21 @@
 import { combineReducers } from "redux";
-import resources from "../resources/resourceFactory";
-import authSlice from "./authSlice";
-import genericError from "./genericError";
-import modal from "./modal";
-import summary from "./summary";
+import auth from "../components/auth/slice";
+import companies from "../components/companies/slice";
+import invoices from "../components/invoices/slice";
+import payments from "../components/payments/slice";
+import periods from "../components/periods/slice";
+import summaries from "../components/summaries/slice";
+import suppliers from "../components/suppliers/slice";
 
 const reducer = combineReducers({
   /* Initialize reducers here */
-  auth: authSlice.reducer,
-  modal: modal.reducer,
-  error: genericError.reducer,
-  summary: summary.reducer,
-  companies: resources.companies.reducer,
-  periods: resources.periods.reducer,
-  suppliers: resources.suppliers.reducer,
-  invoices: resources.invoices.reducer,
-  payments: resources.payments.reducer,
-  supplierSummaries: resources.supplierSummaries.reducer,
+  auth,
+  companies,
+  periods,
+  suppliers,
+  summaries,
+  invoices,
+  payments,
 });
 
 export default reducer;
