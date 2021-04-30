@@ -1,13 +1,11 @@
-import { PropTypes } from 'prop-types';
-import React, { forwardRef, useEffect, useState } from "react";
+import React, { forwardRef } from "react";
 import { components } from "react-select";
 import apiService from '../../../../services/apiService';
-import httpService from "../../../../services/httpService";
-import Autocomplete from '../../Autocomplete';
+import EntityUrlField from "./EntityUrlField";
 
 /**
- * Custom options menu to display the invoice's
- * supplier name on top of the invoice description.
+ * Custom options menu for the select input field.
+ * Displays the invoice's supplier name on top of the invoice description.
  */
 const Option = (props) => {
   return (
@@ -21,39 +19,19 @@ const Option = (props) => {
 };
 
 /**
- * Input with autocompletion to select a invoice URI.
+ * Input field with autocompletion for invoices.
+ * Returns the URL of the selected invoice as value.
  */
-const InvoiceField = forwardRef(({ value, onChange, ...props }, ref) => {
-  const [invoice, setInvoice] = useState();
-
-  // Every time the invoice changes pass its URI to onChange.
-  useEffect(() => {
-    onChange(invoice?._links.self.href);
-  }, [invoice, onChange]);
-
-  // Fetch and set the invoice by the provided URI;
-  useEffect(() => {
-    if (!value || invoice) return;
-
-    const fetchInvoice = async () => {
-      try {
-        const { data } = await httpService.get(value);
-        setInvoice(data);
-      } catch (error) {
-        console.error("Error while loading initial value.", error);
-      }
-    };
-
-    fetchInvoice();
-  }, [value, invoice]);
-
-  //Options loader.
+const InvoiceField = forwardRef((props, ref) => {
+  // Options loader function.
   const loadOptions = async (inputValue, callback) => {
     try {
       const { _embedded } = await apiService.searchByMethod(
         "invoices",
         "findByDescriptionContainingIgnoreCase",
-        { description: inputValue }
+        {
+          description: inputValue,
+        }
       );
       callback(_embedded.invoices);
     } catch (error) {
@@ -63,26 +41,14 @@ const InvoiceField = forwardRef(({ value, onChange, ...props }, ref) => {
   };
 
   return (
-    <Autocomplete
+    <EntityUrlField
       {...props}
       ref={ref}
-      components={{ Option }}
       getOptionLabel={(invoice) => invoice.description}
-      getOptionValue={(invoice) => invoice._links.self.href}
-      value={invoice}
       loadOptions={loadOptions}
-      onChange={setInvoice}
+      components={{ Option }}
     />
   );
 });
-
-InvoiceField.propTypes = {
-  value: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-};
-
-InvoiceField.defaultProps = {
-  value: "",
-};
 
 export default InvoiceField;

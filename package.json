@@ -1,11 +1,11 @@
 {
   "name": "books",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
-  "description": "Books",
-  "author": "nicoladaniello",
+  "description": "Books - Simple accounting software",
+  "author": "Nicola D'Aniello",
   "keywords": [
-    "gatsby"
+    "accounting"
   ],
   "scripts": {
     "develop": "gatsby develop",

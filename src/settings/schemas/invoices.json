@@ -14,7 +14,7 @@
       "readOnly": false,
       "writeOnly": true,
       "type": "string",
-      "format": "supplier"
+      "format": "uri"
     },
     "payments": {
       "title": "Pagamento",

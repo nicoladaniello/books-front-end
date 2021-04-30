@@ -12,10 +12,12 @@ const SchemaForm = ({
   children,
   ...props
 }) => {
-  const { control, formState, handleSubmit, setError } = useForm({
-    defaultValues,
-  });
+  const fields = getFields(schema);
 
+  const form = useForm({ defaultValues });
+  const { control, formState, handleSubmit, setError } = form;
+
+  // Set errors
   useEffect(() => {
     if (errors)
       errors.forEach(({ property, message }) =>
@@ -23,11 +25,21 @@ const SchemaForm = ({
       );
   }, [errors, setError]);
 
-  const fields = getFields(schema);
-
+  // Function to render input fields
   const renderedFields = Object.keys(fields).map((key) => {
     let defaultValue = defaultValues[key] || null;
-    // if (key === "supplier" && !defaultValues[key]) defaultValue = { name: "" };
+
+    // Set the value for all URI fields.
+    // If the passed default values have a _links object 
+    // containing the named field, us it as field value.
+    if (
+      fields[key].format === "uri" &&
+      !defaultValues[key] &&
+      defaultValues?._links &&
+      defaultValues?._links[key]
+    )
+      defaultValue = defaultValues?._links[key].href;
+
     return (
       <Controller
         {...props}
@@ -35,38 +47,6 @@ const SchemaForm = ({
         name={key}
         control={control}
         defaultValue={defaultValue}
-        rules={{
-          required: {
-            value: schema.required && schema.required.includes(key),
-            message: "Questo campo è obbligatorio.",
-          },
-          min: {
-            value: fields[key].minimum,
-            message: `Il minimo richiesto è di ${fields[key].minimum}.`,
-          },
-          max: {
-            value: fields[key].max,
-            message: `Il massimo richiesto è di ${fields[key].max}.`,
-          },
-          minLength: {
-            value: fields[key].minLength,
-            message: `Inserisci almeno ${fields[key].minLength} caratteri.`,
-          },
-          maxLength: {
-            value: fields[key].maxLength,
-            message: `Massimi caratteri consentiti sono ${fields[key].maxLength}.`,
-          },
-          valueAsDate: {
-            value:
-              fields[key].format === "date" ||
-              fields[key].format === "date-time",
-            message: "Data invalida.",
-          },
-          valueAsNumber: {
-            value: fields[key].type === "number",
-            message: "Inserisci solo numeri.",
-          },
-        }}
         render={({ field }) => (
           <Form.Group>
             <Form.Label>{fields[key].title}</Form.Label>
@@ -92,6 +72,12 @@ const SchemaForm = ({
   );
 };
 
+/**
+ * Get the fields
+ *
+ * @param {*} schema
+ * @returns
+ */
 function getFields(schema) {
   return Object.assign(
     {},
