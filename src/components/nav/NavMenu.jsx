@@ -1,19 +1,21 @@
 import { Link } from "gatsby";
 import React from "react";
 import { Card, Dropdown, Nav } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import routes from "../settings/routes";
-import Icon from "./common/Icon";
-import { openModal as openInvoicesModal } from "./invoices/slice";
-import UpsertInvoiceModal from "./invoices/UpsertInvoiceModal";
-import { openModal as openPaymentsModal } from "./payments/slice";
-import UpsertPaymentModal from "./payments/UpsertPaymentModal";
-import { openModal as openPeriodModal } from "./periods/slice";
-import UpsertPeriodModal from "./periods/UpsertPeriodModal";
-import { openModal as openSupplierModal } from "./suppliers/slice";
-import UpsertSupplierModal from "./suppliers/UpsertSupplierModal";
+import routes from "../../settings/routes";
+import Icon from "../common/Icon";
+import { openModal as openInvoicesModal } from "../invoices/slice";
+import UpsertInvoiceModal from "../invoices/UpsertInvoiceModal";
+import { openModal as openPaymentsModal } from "../payments/slice";
+import UpsertPaymentModal from "../payments/UpsertPaymentModal";
+import { openModal as openPeriodModal } from "../periods/slice";
+import UpsertPeriodModal from "../periods/UpsertPeriodModal";
+import { openModal as openSupplierModal } from "../suppliers/slice";
+import UpsertSupplierModal from "../suppliers/UpsertSupplierModal";
 
 const NavMenu = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const handlePrint = (e) => {
@@ -27,11 +29,11 @@ const NavMenu = () => {
       <UpsertPaymentModal />
       <UpsertPeriodModal />
       <UpsertSupplierModal />
-      <Card.Body className="pl-2">
+      <Card.Body className="pl-2 py-3">
         <Dropdown>
           <Dropdown.Toggle block className="d-flex no-caret pl-0 shadow-sm">
             <Icon className="col-4 text-center" icon="plus" />
-            <span className="pl-2">Aggiungi</span>
+            <span className="pl-2">{t("common.insert")}</span>
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item
@@ -41,7 +43,7 @@ const NavMenu = () => {
               }
             >
               <Icon className="col-2" icon="calendar-alt" />
-              <span className="col-10">Aggiungi periodo</span>
+              <span className="col-10">{t("modules.period.insert")}</span>
             </Dropdown.Item>
             <Dropdown.Item
               className="d-flex"
@@ -52,7 +54,7 @@ const NavMenu = () => {
               }
             >
               <Icon className="col-2" icon="truck" />
-              <span className="col-10">Aggiungi fornitore</span>
+              <span className="col-10">{t("modules.supplier.insert")}</span>
             </Dropdown.Item>
             <Dropdown.Item
               className="d-flex"
@@ -61,7 +63,7 @@ const NavMenu = () => {
               }
             >
               <Icon className="col-2" icon="file-invoice" />
-              <span className="col-10">Aggiungi fattura</span>
+              <span className="col-10">{t("modules.invoice.insert")}</span>
             </Dropdown.Item>
             <Dropdown.Item
               className="d-flex"
@@ -70,7 +72,7 @@ const NavMenu = () => {
               }
             >
               <Icon className="col-2" icon="credit-card" />
-              <span className="col-10">Aggiungi pagamento</span>
+              <span className="col-10">{t("modules.payment.insert")}</span>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
@@ -84,7 +86,7 @@ const NavMenu = () => {
           to={routes.periods}
         >
           <Icon className="col-4 text-center" icon="calendar-alt" />
-          <span>Periodi</span>
+          <span>{t("common.periods")}</span>
         </Nav.Link>
         <Nav.Link
           className="d-flex"
@@ -94,7 +96,7 @@ const NavMenu = () => {
           to={routes.suppliers}
         >
           <Icon className="col-4 text-center" icon="truck" />
-          <span>Fornitori</span>
+          <span>{t("common.suppliers")}</span>
         </Nav.Link>
         <Nav.Link
           className="d-flex"
@@ -104,7 +106,7 @@ const NavMenu = () => {
           to={routes.summary}
         >
           <Icon className="col-4 text-center" icon="calendar-alt" />
-          <span>Situazione</span>
+          <span>{t("common.summary")}</span>
         </Nav.Link>
         <Nav.Link
           className="d-flex"
@@ -114,7 +116,7 @@ const NavMenu = () => {
           to={routes.invoices}
         >
           <Icon className="col-4 text-center" icon="file-invoice" />
-          <span>Fatture</span>
+          <span>{t("common.invoices")}</span>
         </Nav.Link>
         <Nav.Link
           className="d-flex"
@@ -124,14 +126,14 @@ const NavMenu = () => {
           to={routes.payments}
         >
           <Icon className="col-4 text-center" icon="credit-card" />
-          <span>Pagamenti</span>
+          <span>{t("common.payments")}</span>
         </Nav.Link>
       </Nav>
       <hr />
       <Nav className="flex-column" variant="pills" role="tablist">
         <Nav.Link className="d-flex" role="button" onClick={handlePrint}>
           <Icon className="col-4 text-center" icon="print" />
-          <span>Stampa</span>
+          <span>{t("common.print")}</span>
         </Nav.Link>
       </Nav>
     </Card>

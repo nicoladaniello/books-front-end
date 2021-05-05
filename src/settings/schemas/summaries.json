@@ -1,33 +1,33 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Situazione Fornitore",
+  "title": "summaries",
   "type": "object",
   "properties": {
     "periodId": {
-      "title": "ID periodo",
+      "title": "id",
       "readOnly": true,
       "writeOnly": true,
       "type": "integer"
     },
     "supplierName": {
-      "title": "Fornitore",
+      "title": "supplier",
       "readOnly": true,
       "type": "string"
     },
     "totalDueAmount": {
-      "title": "Fatture",
+      "title": "invoices",
       "readOnly": true,
       "type": "number",
       "format": "currency"
     },
     "totalPaidAmount": {
-      "title": "Pagamenti",
+      "title": "payments",
       "readOnly": true,
       "type": "number",
       "format": "currency"
     },
     "outstandingAmount": {
-      "title": "Residuo",
+      "title": "residual",
       "readOnly": true,
       "type": "number",
       "format": "currency"

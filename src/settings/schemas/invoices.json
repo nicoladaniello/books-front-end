@@ -1,73 +1,73 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Fatture",
+  "title": "invoices",
   "type": "object",
   "required": ["supplier", "dated", "description", "amount"],
   "properties": {
     "id": {
-      "title": "ID",
+      "title": "id",
       "readOnly": true,
       "type": "integer"
     },
     "supplier": {
-      "title": "Fornitore",
+      "title": "supplier",
       "readOnly": false,
       "writeOnly": true,
       "type": "string",
       "format": "uri"
     },
     "payments": {
-      "title": "Pagamento",
+      "title": "payments",
       "readOnly": true,
       "writeOnly": true,
       "type": "string",
       "format": "uri"
     },
     "supplierName": {
-      "title": "Fornitore",
+      "title": "supplier",
       "readOnly": true,
       "type": "string"
     },
     "dated": {
-      "title": "Data",
+      "title": "date",
       "readOnly": false,
       "type": "string",
       "format": "date"
     },
     "description": {
-      "title": "Descrizione",
+      "title": "description",
       "readOnly": false,
       "type": "string",
       "minLength": 3
     },
     "amount": {
-      "title": "Ammontare",
+      "title": "amount",
       "readOnly": false,
       "type": "number",
       "format": "currency",
       "minimum": 0
     },
     "totalPaidAmount": {
-      "title": "Pagato",
+      "title": "paid",
       "readOnly": true,
       "type": "number",
       "format": "currency"
     },
     "leftoverAmount": {
-      "title": "Residuo",
+      "title": "residual",
       "readOnly": true,
       "type": "number",
       "format": "currency"
     },
     "created": {
-      "title": "Data creazione",
+      "title": "created",
       "readOnly": true,
       "writeOnly": true,
       "type": "string",
       "format": "date-time"
     },
     "modified": {
-      "title": "Ultima modifica",
+      "title": "modified",
       "readOnly": true,
       "writeOnly": true,
       "type": "string",

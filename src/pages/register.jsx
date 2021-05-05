@@ -7,8 +7,10 @@ import useAuth from "../components/auth/useAuth";
 import { upsert } from "../components/companies/actions";
 import routes from "../settings/routes";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
+  const { t } = useTranslation();
   const state = useSelector((state) => state.companies);
   const dispatch = useDispatch();
   const auth = useAuth();
@@ -67,9 +69,8 @@ const Register = () => {
       <Row className="justify-content-center">
         <Col lg="5">
           <div className="text-center">
-            <h5 className="mb-0">Benvenuto in</h5>
             <h1 className="display-3 font-weight-bold mb-4">Books</h1>
-            <h4 className="mb-2">Registra un'azienda</h4>
+            <h4 className="mb-2">{t("modules.company.insert")}</h4>
           </div>
 
           <Card className="mb-3">
@@ -79,11 +80,10 @@ const Register = () => {
                 onSubmit={handleSubmit(createCompany)}
               >
                 <Form.Group>
-                  <Form.Label>Ragione Sociale</Form.Label>
+                  <Form.Label>{t("common.name")}</Form.Label>
                   <Form.Control
                     {...register("name", { required: true, minLength: 3 })}
                     type="text"
-                    placeholder="Azienda SRC"
                     disabled={state.isLoading}
                     className={errors.name && "is-invalid"}
                   />
@@ -92,11 +92,10 @@ const Register = () => {
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group>
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>{t("common.password")}</Form.Label>
                   <Form.Control
                     {...register("password")}
                     type="password"
-                    placeholder="password"
                     disabled={state.isLoading}
                     className={errors.password && "is-invalid"}
                   />
@@ -111,14 +110,15 @@ const Register = () => {
                   variant="primary"
                   disabled={state.isLoading}
                 >
-                  Registra
+                  {t("common.insert")}
                 </Button>
               </Form>
             </Card.Body>
           </Card>
-          <p className="text-center">
-            Se sei già registrato <Link to={routes.login}>accedi qui</Link>.
-          </p>
+          <p className="text-center text-small">{t("common.otherwise")}</p>
+          <Button block variant="light" as={Link} to={routes.login}>
+            {t("common.login")}
+          </Button>
         </Col>
       </Row>
     </Container>

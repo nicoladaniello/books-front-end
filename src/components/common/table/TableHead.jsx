@@ -1,7 +1,9 @@
 import React from "react";
 import TableHeader from "./TableHeader";
+import { useTranslation } from "react-i18next";
 
 const TableHead = ({ schema, sortedBy, onSort }) => {
+  const { t } = useTranslation();
   const headers = getHeaders(schema);
 
   /**
@@ -28,7 +30,7 @@ const TableHead = ({ schema, sortedBy, onSort }) => {
         {Object.keys(headers).map((key) => (
           <TableHeader
             key={key}
-            label={headers[key].title}
+            label={t(`common.${headers[key].title}`)}
             sorted={sortedBy?.param === key}
             desc={sortedBy?.desc}
             onClick={() => handleSort(key)}

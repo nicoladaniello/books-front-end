@@ -1,7 +1,8 @@
 import React from "react";
 import { Button, Modal as BSModal } from "react-bootstrap";
 import Modal from ".";
-import SchemaForm from '../form/SchemaForm';
+import SchemaForm from "../form/SchemaForm";
+import { useTranslation } from "react-i18next";
 
 const FormModal = ({
   isOpen,
@@ -12,6 +13,8 @@ const FormModal = ({
   onConfirm,
   onDismiss,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Modal isOpen={isOpen} onClose={onDismiss}>
       {!!title && (
@@ -34,10 +37,10 @@ const FormModal = ({
 
             <BSModal.Footer>
               <Button variant="light" onClick={onDismiss}>
-                Annulla
+                {t("common.dismiss")}
               </Button>
               <Button variant="primary" type="submit">
-                Confirma
+                {t("common.confirm")}
               </Button>
             </BSModal.Footer>
           </>

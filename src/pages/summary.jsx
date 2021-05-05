@@ -1,15 +1,17 @@
 import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import Pagination from "../components/common/Pagination";
-import SearchByButton from '../components/common/SearchByButton';
+import SearchByButton from "../components/common/SearchByButton";
 import Table from "../components/common/table/Table";
 import View from "../components/common/View";
 import { loadEntities, loadMore } from "../components/summaries/actions";
-import SearchByPeriodModal from '../components/summaries/SearchByPeriodModal';
+import SearchByPeriodModal from "../components/summaries/SearchByPeriodModal";
 import { openModal } from "../components/summaries/slice";
 import schema from "../settings/schemas/summaries";
 
 const Summaries = () => {
+  const { t } = useTranslation();
   const state = useSelector((state) => state.summaries);
   const dispatch = useDispatch();
 
@@ -31,7 +33,7 @@ const Summaries = () => {
               dispatch(openModal({ modal: SearchByPeriodModal.modal }))
             }
           >
-            {state.search?.period?.name || "Seleiona periodo"}
+            {state.search?.period?.name || t("modules.period.select")}
           </SearchByButton>
         </div>
         <Table

@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { Button, Modal as BSModal } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { loadEntities } from './actions';
-import { closeModal, setSearchParams } from "./slice";
 import apiService from "../../services/apiService";
 import Autocomplete from "../common/Autocomplete";
 import Modal from "../common/modal/index";
+import { loadEntities } from "./actions";
+import { closeModal, setSearchParams } from "./slice";
 
 const modal = "SearchByPeriodModal";
 
 const SearchByPeriodModal = () => {
+  const { t } = useTranslation();
   const state = useSelector((state) => state.summaries.modals[modal]);
   const dispatch = useDispatch();
   const [period, setPeriod] = useState();
@@ -33,7 +35,7 @@ const SearchByPeriodModal = () => {
       );
       callback(_embedded.periods);
     } catch (error) {
-      alert("Errore: impossibile caricare opzioni.");
+      alert(t("messages.unexpectedError"));
       console.error("Error while loading options.", error);
     }
   };
@@ -52,10 +54,10 @@ const SearchByPeriodModal = () => {
 
       <BSModal.Footer>
         <Button variant="light" onClick={() => dispatch(closeModal(modal))}>
-          Annulla
+          {t("common.dismiss")}
         </Button>
         <Button variant="primary" type="submit" onClick={handleConfirm}>
-          Confirma
+          {t("common.confirm")}
         </Button>
       </BSModal.Footer>
     </Modal>

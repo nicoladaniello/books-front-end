@@ -1,6 +1,7 @@
 import React, { forwardRef } from "react";
 import AsyncSelect from "react-select/async";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 const Autocomplete = forwardRef(
   (
@@ -14,8 +15,11 @@ const Autocomplete = forwardRef(
     },
     ref
   ) => {
+    const { t } = useTranslation();
+
     return (
       <AsyncSelect
+        placeholder={`${t("common.select")}...`}
         {...props}
         ref={ref}
         className={classnames(className, "w-100")}

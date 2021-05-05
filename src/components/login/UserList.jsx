@@ -1,6 +1,7 @@
 import { Link } from "gatsby";
 import React, { useEffect } from "react";
 import { Alert, Button, ListGroup } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import routes from "../../settings/routes";
 import Icon from "../common/Icon";
@@ -11,6 +12,7 @@ import { loadEntities } from "../companies/actions";
  *
  */
 const UserList = ({ onSelect }) => {
+  const { t } = useTranslation();
   const state = useSelector((state) => state.companies);
   const dispatch = useDispatch();
 
@@ -45,8 +47,8 @@ const UserList = ({ onSelect }) => {
           ))}
         </ListGroup>
       )}
-      <Button block as={Link} to={routes.register} variant="primary">
-        Aggiungi un'azienda
+      <Button block variant="primary" as={Link} to={routes.register}>
+        {t("modules.company.insert")}
       </Button>
     </>
   );

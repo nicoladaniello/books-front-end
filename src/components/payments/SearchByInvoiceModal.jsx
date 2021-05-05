@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Modal as BSModal } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { components } from "react-select";
 import apiService from "../../services/apiService";
@@ -26,6 +27,7 @@ const Option = (props) => {
 };
 
 const SearchByInvoiceModal = () => {
+  const { t } = useTranslation();
   const state = useSelector((state) => state.payments.modals[modal]);
   const dispatch = useDispatch();
   const [invoice, setInvoice] = useState();
@@ -49,7 +51,7 @@ const SearchByInvoiceModal = () => {
       );
       callback(_embedded.invoices);
     } catch (error) {
-      alert("Errore: impossibile caricare opzioni.");
+      alert(t("messages.unexpectedError"));
       console.error("Error while loading options.", error);
     }
   };
@@ -69,10 +71,10 @@ const SearchByInvoiceModal = () => {
 
       <BSModal.Footer>
         <Button variant="light" onClick={() => dispatch(closeModal(modal))}>
-          Annulla
+          {t("common.dismiss")}
         </Button>
         <Button variant="primary" type="submit" onClick={handleConfirm}>
-          Confirma
+          {t("common.confirm")}
         </Button>
       </BSModal.Footer>
     </Modal>

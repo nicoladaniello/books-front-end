@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import SearchByButton from "../components/common/SearchByButton";
 import Icon from "../components/common/Icon";
 import Pagination from "../components/common/Pagination";
+import SearchByButton from "../components/common/SearchByButton";
 import Table from "../components/common/table/Table";
 import View from "../components/common/View";
 import { loadEntities, loadMore } from "../components/invoices/actions";
@@ -14,6 +15,7 @@ import UpsertInvoiceModal from "../components/invoices/UpsertInvoiceModal";
 import schema from "../settings/schemas/invoices";
 
 const Invoices = () => {
+  const { t } = useTranslation();
   const state = useSelector((state) => state.invoices);
   const dispatch = useDispatch();
 
@@ -54,7 +56,7 @@ const Invoices = () => {
               dispatch(openModal({ modal: SearchByPeriodModal.modal }))
             }
           >
-            {state.search?.period?.name || "Seleiona periodo"}
+            {state.search?.period?.name || t("modules.period.select")}
           </SearchByButton>
           <SearchByButton
             input={state.search?.supplier}
@@ -62,7 +64,7 @@ const Invoices = () => {
               dispatch(openModal({ modal: SearchBySupplierModal.modal }))
             }
           >
-            {state.search?.supplier?.name || "Seleziona fornitore"}
+            {state.search?.supplier?.name || t("modules.supplier.select")}
           </SearchByButton>
         </div>
         <Table

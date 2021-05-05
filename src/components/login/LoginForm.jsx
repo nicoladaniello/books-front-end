@@ -1,13 +1,15 @@
 import React from "react";
 import { Alert, Button, Card, Form, InputGroup } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import httpRequestStatus from "../../utils/httpRequestStatus";
-import useAuth from '../auth/useAuth';
+import useAuth from "../auth/useAuth";
 
 /**
  *
  */
 const LoginForm = ({ user, onDismiss }) => {
+  const { t } = useTranslation();
   const {
     loginRequest: { status, error },
     login,
@@ -50,7 +52,7 @@ const LoginForm = ({ user, onDismiss }) => {
             />
           </Form.Group>
           <Button block variant="primary" type="submit" disabled={isLoading}>
-            {isLoading ? "Accesso in corso..." : "Accedi"}
+            {isLoading ? t("common.loading") : t("common.login")}
           </Button>
           <Button
             block
@@ -59,7 +61,7 @@ const LoginForm = ({ user, onDismiss }) => {
             disabled={isLoading}
             onClick={() => handleDismiss()}
           >
-            Annulla
+            {t("common.dismiss")}
           </Button>
         </Form>
       </Card.Body>

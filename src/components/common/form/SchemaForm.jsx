@@ -2,6 +2,7 @@ import { PropTypes } from "prop-types";
 import React, { useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import SchemaField from "./fields/SchemaField";
 
 const SchemaForm = ({
@@ -12,10 +13,11 @@ const SchemaForm = ({
   children,
   ...props
 }) => {
+  const { t } = useTranslation();
+  const { control, formState, handleSubmit, setError } = useForm({
+    defaultValues,
+  });
   const fields = getFields(schema);
-
-  const form = useForm({ defaultValues });
-  const { control, formState, handleSubmit, setError } = form;
 
   // Set errors
   useEffect(() => {
@@ -30,7 +32,7 @@ const SchemaForm = ({
     let defaultValue = defaultValues[key] || null;
 
     // Set the value for all URI fields.
-    // If the passed default values have a _links object 
+    // If the passed default values have a _links object
     // containing the named field, us it as field value.
     if (
       fields[key].format === "uri" &&
@@ -49,7 +51,7 @@ const SchemaForm = ({
         defaultValue={defaultValue}
         render={({ field }) => (
           <Form.Group>
-            <Form.Label>{fields[key].title}</Form.Label>
+            <Form.Label>{t(`common.${fields[key].title}`)}</Form.Label>
             <SchemaField
               {...field}
               type={fields[key].type}

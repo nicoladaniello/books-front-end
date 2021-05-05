@@ -1,48 +1,48 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Periodi",
+  "title": "periods",
   "type": "object",
   "required": ["name", "startDate", "endDate"],
   "properties": {
     "id": {
-      "title": "ID",
+      "title": "id",
       "readOnly": true,
       "writeOnly": true,
       "type": "integer"
     },
     "name": {
-      "title": "Nome",
+      "title": "name",
       "readOnly": false,
       "type": "string",
       "minLength": 3
     },
     "startDate": {
-      "title": "Inizio data",
+      "title": "startDate",
       "readOnly": false,
       "type": "string",
       "format": "date"
     },
     "endDate": {
-      "title": "Fine data",
+      "title": "endDate",
       "readOnly": false,
       "type": "string",
       "format": "date"
     },
     "summary": {
-      "title": "Summary",
+      "title": "summary",
       "readOnly": true,
       "type": "object",
       "$ref": "#/definitions/periodSummary"
     },
     "created": {
-      "title": "Data creazione",
+      "title": "created",
       "readOnly": true,
       "writeOnly": true,
       "type": "string",
       "format": "date-time"
     },
     "modified": {
-      "title": "Ultima modifica",
+      "title": "modified",
       "readOnly": true,
       "writeOnly": true,
       "type": "string",
@@ -54,19 +54,19 @@
       "type": "object",
       "properties": {
         "totalDueAmount": {
-          "title": "Fatture",
+          "title": "invoices",
           "readOnly": true,
           "type": "number",
           "format": "currency"
         },
         "totalPaidAmount": {
-          "title": "Pagamenti",
+          "title": "payments",
           "readOnly": true,
           "type": "number",
           "format": "currency"
         },
         "outstandingAmount": {
-          "title": "Residuo",
+          "title": "residual",
           "readOnly": true,
           "type": "number",
           "format": "currency"

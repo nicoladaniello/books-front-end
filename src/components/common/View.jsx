@@ -5,8 +5,8 @@ import React from "react";
 import { Col, Row } from "react-bootstrap";
 import routes from "../../settings/routes";
 import useAuth from "../auth/useAuth";
-import NavMenu from "../NavMenu";
-import Navbar from "./Navbar";
+import Navbar from "../nav/Navbar";
+import NavMenu from "../nav/NavMenu";
 
 export const ViewTitle = ({ className, children, ...props }) => (
   <h1 {...props} className={classnames(className, "h4 mb-4")}>

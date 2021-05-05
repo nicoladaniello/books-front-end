@@ -2,6 +2,7 @@ import { PropTypes } from "prop-types";
 import React from "react";
 import Spinner from "../Spinner";
 import TableRow from "./TableRow";
+import { useTranslation } from "react-i18next";
 
 const TableBody = ({
   ids,
@@ -12,6 +13,8 @@ const TableBody = ({
   isLoading,
   ...props
 }) => {
+  const { t } = useTranslation();
+
   const isEmpty = !isLoading && !ids?.length;
   const hasResults = !isLoading && !isEmpty;
 
@@ -20,7 +23,7 @@ const TableBody = ({
       <tr className="hover-none">
         <td colSpan="100">
           <h6 className="text-muted small mb-0">
-            {schema.title} ({page?.totalElements || 0})
+            {t(`common.${schema.title}`)} ({page?.totalElements || 0})
           </h6>
         </td>
       </tr>
@@ -36,7 +39,7 @@ const TableBody = ({
         <tr className="hover-none">
           <td colSpan="100" className="text-center">
             <p className="text-muted font-weight-bold my-5">
-              Nessun risultato.
+              {t("common.empty")}.
             </p>
           </td>
         </tr>
