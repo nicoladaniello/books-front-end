@@ -6,12 +6,12 @@ import Pagination from "../components/common/Pagination";
 import SearchByButton from "../components/common/SearchByButton";
 import Table from "../components/common/table/Table";
 import View from "../components/common/View";
+import { openModal } from "../components/modals/slice";
 import { loadEntities, loadMore } from "../components/payments/actions";
 import DeletePaymentModal from "../components/payments/DeletePaymentModal";
 import SearchByInvoiceModal from "../components/payments/SearchByInvoiceModal";
 import SearchByPeriodModal from "../components/payments/SearchByPeriodModal";
 import SearchBySupplierModal from "../components/payments/SearchBySupplierModal";
-import { openModal } from "../components/payments/slice";
 import UpsertPaymentModal from "../components/payments/UpsertPaymentModal";
 import schema from "../settings/schemas/payments";
 

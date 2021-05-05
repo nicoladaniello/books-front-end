@@ -4,9 +4,9 @@ import Icon from "../components/common/Icon";
 import Pagination from "../components/common/Pagination";
 import Table from "../components/common/table/Table";
 import View from "../components/common/View";
+import { openModal } from "../components/modals/slice";
 import { loadEntities, loadMore } from "../components/suppliers/actions";
 import DeleteSupplierModal from "../components/suppliers/DeleteSupplierModal";
-import { openModal } from "../components/suppliers/slice";
 import UpsertSupplierModal from "../components/suppliers/UpsertSupplierModal";
 import schema from "../settings/schemas/suppliers";
 

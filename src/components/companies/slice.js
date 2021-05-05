@@ -7,7 +7,6 @@ const initialState = {
   ids: [],
   entities: {},
   page: {},
-  search: {},
 };
 
 const adapter = createEntityAdapter();
@@ -15,14 +14,6 @@ const adapter = createEntityAdapter();
 const slice = createSlice({
   name: "companies",
   initialState: adapter.getInitialState(initialState),
-  reducers: {
-    setSearchParams(state, action) {
-      state.search = {
-        ...state.search,
-        ...action.payload,
-      };
-    },
-  },
   extraReducers: {
     [loadEntities.pending]: (state) => {
       state.isLoading = true;
@@ -51,7 +42,5 @@ const slice = createSlice({
     },
   },
 });
-
-export const { openModal, closeModal, setSearchParams } = slice.actions;
 
 export default slice.reducer;

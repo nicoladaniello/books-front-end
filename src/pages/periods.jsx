@@ -4,9 +4,9 @@ import Icon from "../components/common/Icon";
 import Pagination from "../components/common/Pagination";
 import Table from "../components/common/table/Table";
 import View from "../components/common/View";
+import { openModal } from "../components/modals/slice";
 import { loadEntities, loadMore } from "../components/periods/actions";
 import DeletePeriodModal from "../components/periods/DeletePeriodModal";
-import { openModal } from "../components/periods/slice";
 import UpsertPeriodModal from "../components/periods/UpsertPeriodModal";
 import schema from "../settings/schemas/periods";
 

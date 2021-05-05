@@ -3,13 +3,13 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import schema from "../../settings/schemas/suppliers";
 import FormModal from "../common/modal/FormModal";
+import { closeModal } from "../modals/slice";
 import { upsert } from "./actions";
-import { closeModal } from "./slice";
 
 const modal = "UpsertSupplierModal";
 
 const UpsertSupplierModal = () => {
-  const state = useSelector((state) => state.suppliers.modals[modal]);
+  const state = useSelector((state) => state.modals[modal]);
   const dispatch = useDispatch();
 
   const { isOpen, props: { supplier } = {} } = state || {};

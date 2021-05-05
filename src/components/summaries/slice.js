@@ -8,7 +8,6 @@ const initialState = {
   entities: {},
   page: {},
   search: {},
-  modals: {},
 };
 
 const adapter = createEntityAdapter();
@@ -17,17 +16,6 @@ const slice = createSlice({
   name: "summaries",
   initialState: adapter.getInitialState(initialState),
   reducers: {
-    openModal(state, action) {
-      const { modal, props } = action.payload;
-      state.modals[modal] = {
-        isOpen: true,
-        props,
-      };
-    },
-    closeModal(state, action) {
-      const modal = action.payload;
-      state.modals[modal] = null;
-    },
     setSearchParams(state, action) {
       state.search = {
         ...state.search,
@@ -66,6 +54,6 @@ const slice = createSlice({
   },
 });
 
-export const { openModal, closeModal, setSearchParams } = slice.actions;
+export const { setSearchParams } = slice.actions;
 
 export default slice.reducer;

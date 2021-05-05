@@ -2,13 +2,13 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ConfirmationModal from "../common/modal/ConfirmationModal";
+import { closeModal } from "../modals/slice";
 import { remove } from "./actions";
-import { closeModal } from "./slice";
 
 const modal = "DeletePaymentModal";
 
 const DeletePaymentModal = () => {
-  const state = useSelector((state) => state.payments.modals[modal]);
+  const state = useSelector((state) => state.modals[modal]);
   const dispatch = useDispatch();
 
   const { isOpen, props: { payment } = {} } = state || {};

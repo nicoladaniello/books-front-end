@@ -5,9 +5,9 @@ import Pagination from "../components/common/Pagination";
 import SearchByButton from "../components/common/SearchByButton";
 import Table from "../components/common/table/Table";
 import View from "../components/common/View";
+import { openModal } from "../components/modals/slice";
 import { loadEntities, loadMore } from "../components/summaries/actions";
 import SearchByPeriodModal from "../components/summaries/SearchByPeriodModal";
-import { openModal } from "../components/summaries/slice";
 import schema from "../settings/schemas/summaries";
 
 const Summaries = () => {

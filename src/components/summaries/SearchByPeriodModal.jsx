@@ -5,14 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import apiService from "../../services/apiService";
 import Autocomplete from "../common/Autocomplete";
 import Modal from "../common/modal/index";
+import { closeModal } from "../modals/slice";
 import { loadEntities } from "./actions";
-import { closeModal, setSearchParams } from "./slice";
+import { setSearchParams } from "./slice";
 
 const modal = "SearchByPeriodModal";
 
 const SearchByPeriodModal = () => {
   const { t } = useTranslation();
-  const state = useSelector((state) => state.summaries.modals[modal]);
+  const state = useSelector((state) => state.modals[modal]);
   const dispatch = useDispatch();
   const [period, setPeriod] = useState();
 

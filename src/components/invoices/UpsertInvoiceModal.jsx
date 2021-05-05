@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import schema from "../../settings/schemas/invoices";
 import FormModal from '../common/modal/FormModal';
+import { closeModal } from "../modals/slice";
 import { upsert } from "./actions";
-import { closeModal } from "./slice";
 
 const modal = "UpsertInvoiceModal";
 
 const UpsertInvoiceModal = () => {
-  const state = useSelector((state) => state.invoices.modals[modal]);
+  const state = useSelector((state) => state.modals[modal]);
   const dispatch = useDispatch();
   const [values, setValues] = useState();
 

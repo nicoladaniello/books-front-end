@@ -5,13 +5,10 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import routes from "../../settings/routes";
 import Icon from "../common/Icon";
-import { openModal as openInvoicesModal } from "../invoices/slice";
 import UpsertInvoiceModal from "../invoices/UpsertInvoiceModal";
-import { openModal as openPaymentsModal } from "../payments/slice";
+import { openModal } from "../modals/slice";
 import UpsertPaymentModal from "../payments/UpsertPaymentModal";
-import { openModal as openPeriodModal } from "../periods/slice";
 import UpsertPeriodModal from "../periods/UpsertPeriodModal";
-import { openModal as openSupplierModal } from "../suppliers/slice";
 import UpsertSupplierModal from "../suppliers/UpsertSupplierModal";
 
 const NavMenu = () => {
@@ -39,7 +36,7 @@ const NavMenu = () => {
             <Dropdown.Item
               className="d-flex"
               onClick={() =>
-                dispatch(openPeriodModal({ modal: UpsertPeriodModal.modal }))
+                dispatch(openModal({ modal: UpsertPeriodModal.modal }))
               }
             >
               <Icon className="col-2" icon="calendar-alt" />
@@ -48,9 +45,7 @@ const NavMenu = () => {
             <Dropdown.Item
               className="d-flex"
               onClick={() =>
-                dispatch(
-                  openSupplierModal({ modal: UpsertSupplierModal.modal })
-                )
+                dispatch(openModal({ modal: UpsertSupplierModal.modal }))
               }
             >
               <Icon className="col-2" icon="truck" />
@@ -59,7 +54,7 @@ const NavMenu = () => {
             <Dropdown.Item
               className="d-flex"
               onClick={() =>
-                dispatch(openInvoicesModal({ modal: UpsertInvoiceModal.modal }))
+                dispatch(openModal({ modal: UpsertInvoiceModal.modal }))
               }
             >
               <Icon className="col-2" icon="file-invoice" />
@@ -68,7 +63,7 @@ const NavMenu = () => {
             <Dropdown.Item
               className="d-flex"
               onClick={() =>
-                dispatch(openPaymentsModal({ modal: UpsertPaymentModal.modal }))
+                dispatch(openModal({ modal: UpsertPaymentModal.modal }))
               }
             >
               <Icon className="col-2" icon="credit-card" />

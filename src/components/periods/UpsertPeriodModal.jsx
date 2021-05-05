@@ -3,13 +3,13 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import schema from "../../settings/schemas/periods";
 import FormModal from "../common/modal/FormModal";
+import { closeModal } from "../modals/slice";
 import { upsert } from "./actions";
-import { closeModal } from "./slice";
 
 const modal = "UpsertPeriodModal";
 
 const UpsertPeriodModal = () => {
-  const state = useSelector((state) => state.periods.modals[modal]);
+  const state = useSelector((state) => state.modals[modal]);
   const dispatch = useDispatch();
 
   const { isOpen, props: { period } = {} } = state || {};

@@ -10,8 +10,8 @@ import { loadEntities, loadMore } from "../components/invoices/actions";
 import DeleteInvoiceModal from "../components/invoices/DeleteInvoiceModal";
 import SearchByPeriodModal from "../components/invoices/SearchByPeriodModal";
 import SearchBySupplierModal from "../components/invoices/SearchBySupplierModal";
-import { openModal } from "../components/invoices/slice";
 import UpsertInvoiceModal from "../components/invoices/UpsertInvoiceModal";
+import { openModal } from "../components/modals/slice";
 import schema from "../settings/schemas/invoices";
 
 const Invoices = () => {

@@ -6,8 +6,9 @@ import { components } from "react-select";
 import apiService from "../../services/apiService";
 import Autocomplete from "../common/Autocomplete";
 import Modal from "../common/modal/index";
+import { closeModal } from "../modals/slice";
 import { loadEntities } from "./actions";
-import { closeModal, setSearchParams } from "./slice";
+import { setSearchParams } from "./slice";
 
 const modal = "SearchByInvoiceModal";
 
@@ -28,7 +29,7 @@ const Option = (props) => {
 
 const SearchByInvoiceModal = () => {
   const { t } = useTranslation();
-  const state = useSelector((state) => state.payments.modals[modal]);
+  const state = useSelector((state) => state.modals[modal]);
   const dispatch = useDispatch();
   const [invoice, setInvoice] = useState();
 
