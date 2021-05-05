@@ -185,8 +185,8 @@ i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     resources,
-    lng: "it",
-    fallbackLng: "en",
+    lng: process.env.DEFAULT_LANGUAGE,
+    fallbackLng: ["en", "it"],
 
     // allow keys to be phrases having `:`, `.`
     // nsSeparator: false,

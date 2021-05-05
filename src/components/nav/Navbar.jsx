@@ -2,14 +2,14 @@ import { Link } from "gatsby";
 import React from "react";
 import { Nav, Navbar as BSNavbar, NavDropdown } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import routes from "../../settings/routes";
 import useAuth from "../auth/useAuth";
 import { openModal } from "../modals/slice";
 import ConfirmShutdownModal from "./ConfirmShutdownModal";
 
 const Navbar = (props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const auth = useAuth();
   const dispatch = useDispatch();
 
@@ -30,6 +30,16 @@ const Navbar = (props) => {
         <BSNavbar.Toggle aria-controls="basic-navbar-nav" />
         <BSNavbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
+            <NavDropdown title={i18n.language}>
+              {i18n.languages.slice(1).map((lng) => (
+                <NavDropdown.Item
+                  key={lng}
+                  onClick={() => i18n.changeLanguage(lng)}
+                >
+                  {lng}
+                </NavDropdown.Item>
+              ))}
+            </NavDropdown>
             <NavDropdown title={auth.user?.name || t("common.options")}>
               {auth.isAuthenticated && (
                 <NavDropdown.Item as={Link} to={routes.logout}>
