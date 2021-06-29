@@ -3,7 +3,7 @@
 
 Books is a simple bespoke bookkeeping application I've developed for a customer in the Hotel business. It provides an easy to use interface and it can run locally on Windows and Mac.
 
-This repo includes the front end of the project. The back end can be found here: [Books Back End](https://github.com/nicoladaniello/books)
+This repo includes the front end of the project. The back end can be found here: [Books Back End](https://github.com/nicoladaniello/books-back-end)
 
 
 ## Features
